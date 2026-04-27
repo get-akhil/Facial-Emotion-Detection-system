@@ -1,0 +1,5 @@
+venv/
+__pycache__/
+fer2013.csv
+*.pyc
+.DS_Store
