@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
 
-# Define the emotion dictionary matching the FER-2013 label distribution
 EMOTIONS = {
     0: "Angry", 
     1: "Disgust", 
@@ -13,23 +12,20 @@ EMOTIONS = {
     6: "Neutral"
 }
 
-# Load the trained Keras model
 print("Loading model...")
 model = load_model('best_emotion_model.h5')
 
-# Load OpenCV's pre-trained Haar cascade for face detection
+#Haar cascade from opencv for detecting face
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Start video capture (0 is usually the default laptop webcam)
-cap = cv2.VideoCapture(0)
-# --- ADD THIS BEFORE THE WHILE LOOP ---
-history_length = 10  # Average the last 10 frames
+cap = cv2.VideoCapture(0) # starts video capture
+
+history_length = 10  # For Averaging the last 10 frames
 emotion_history = []
-# ---------------------------------------
 
 while True:
-    ret, frame = cap.read()
-    if not ret: break
+    ret, frame = cap.read() #capture frame(Numpy array representing BGR)
+    if not ret: break #didnt capture
         
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray_frame, 1.3, 5)
@@ -39,21 +35,21 @@ while True:
         roi_resized = cv2.resize(roi_gray, (48, 48)) / 255.0
         roi_reshaped = np.reshape(roi_resized, (1, 48, 48, 1))
         
-        # 1. Get raw prediction
+        # Get prediction
         raw_prediction = model.predict(roi_reshaped, verbose=0)[0]
         
-        # 2. Add to history and maintain size
+        # Adding it to history and maintaining size
         emotion_history.append(raw_prediction)
         if len(emotion_history) > history_length:
             emotion_history.pop(0)
             
-        # 3. Calculate the AVERAGE of the history
+        # Calculating the Avg of the history
         smoothed_prediction = np.mean(emotion_history, axis=0)
         
         max_index = np.argmax(smoothed_prediction)
         predicted_emotion = EMOTIONS[max_index]
         
-        # --- UI Drawing (Use smoothed_prediction instead of raw) ---
+        #UI
         for i, prob in enumerate(smoothed_prediction):
             label = EMOTIONS[i]
             # Draw black background
@@ -70,8 +66,7 @@ while True:
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
     cv2.imshow('Smoothed Emotion Detection', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'): break
+    if cv2.waitKey(1) & 0xFF == ord('q'): break #quit
 
-# Clean up resources
 cap.release()
 cv2.destroyAllWindows()
