@@ -61,4 +61,11 @@ The model classifies faces into one of the following:
 ### 1. Install Dependencies
 ```bash
 pip install tensorflow opencv-python numpy pandas
-
+```
+### 2. Activate virtual environment
+```bash
+source venv/bin/activate
+```
+### 3. Run
+```bash
+python detect_emotion.py
