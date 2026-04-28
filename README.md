@@ -42,7 +42,7 @@ The detection script implements a multi-stage vision pipeline to transform raw w
 ---
 
 ## Tech Stack
-* **Python 3.x**
+* **Python 3.11**
 * **TensorFlow/Keras:** Model building and training.
 * **OpenCV:** Video stream handling and image processing.
 * **NumPy:** High-speed matrix calculations.
@@ -61,3 +61,4 @@ The model classifies faces into one of the following:
 ### 1. Install Dependencies
 ```bash
 pip install tensorflow opencv-python numpy pandas
+
