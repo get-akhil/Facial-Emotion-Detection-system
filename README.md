@@ -1,11 +1,11 @@
 # Facial Emotion Detection System
 
-A real-time Computer Vision application that detects human faces and classifies their emotions into seven categories using a deep learning Convolutional Neural Network (CNN).
+A real-time Computer Vision application that detects human faces and classifies their emotions into seven categories using a Convolutional Neural Network (CNN).
 
 ---
 
 ## Project Overview
-This project bridges the gap between static Deep Learning training and real-time application. It uses a custom-built CNN trained on the **FER-2013** dataset to identify emotions from live webcam feeds with high stability and accuracy.
+It uses a custom-built CNN trained on the **FER-2013** dataset to identify emotions from live webcam feeds with high stability and accuracy.
 
 ### Key Features:
 * **Real-time Detection:** Processes video frames at 30+ FPS.
